@@ -1,5 +1,11 @@
+{View} = require 'atom'
+
+CustomProfileScriptConsoleView = require './customprofilescript-console-view'
+
 module.exports =
 class CustomprofilescriptView
+
+
   constructor: (serializeState) ->
     # Create root element
     @element = document.createElement('div')
@@ -13,6 +19,10 @@ class CustomprofilescriptView
 
     # Register command that toggles this view
     atom.commands.add 'atom-workspace', 'customprofilescript:toggle': => @toggle()
+
+    @customprofilescriptconsoleview = new CustomProfileScriptConsoleView()
+    #atom.workspaceView.appendToBottom(@customprofilescriptconsoleview)
+
 
   # Returns an object that can be retrieved when package is activated
   serialize: ->

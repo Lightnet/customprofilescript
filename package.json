@@ -1,11 +1,12 @@
 {
-  "name": "customprofilescript",
+  "name": "Custom Profile Script",
   "main": "./lib/customprofilescript",
   "version": "0.0.0",
   "description": "A short description of your package",
-  "activationCommands": {
-    "atom-workspace": "customprofilescript:toggle"
-  },
+  "activationCommands":[
+    {"atom-workspace": "customprofilescript:toggle"},
+    {"atom-workspace": "customprofilescript:open-console"}
+],
   "repository": "https://github.com/atom/customprofilescript",
   "license": "MIT",
   "engines": {

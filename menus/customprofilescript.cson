@@ -16,6 +16,15 @@
           'label': 'Toggle'
           'command': 'customprofilescript:toggle'
         }
+        {
+          'label': 'Show'
+          'command': 'customprofilescript:open-console'
+        }
+        {
+          'label': 'Hide'
+          'command': 'customprofilescript:close-console'
+        }
+
       ]
     ]
   }
