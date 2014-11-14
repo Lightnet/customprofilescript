@@ -1,9 +1,13 @@
 ###
- Project Name: Custom Script Builds
- Link: https://github.com/Lightnet/customscriptbuilds
- License: MIT
- Information: To run typescript for server hosting for better style format flow.
- To create a simple work flow layout. For browser game or application for html.
+
+  Project Name: Custom Profile Script
+  Date:2014.11.13
+  Created by: Lightnet
+  Link:https://github.com/Lightnet/customprofilescript
+  license: MIT
+
+  Check for more information on readme.txt file.
+
 ###
 
 #CodeContext = require './code-context'
@@ -29,8 +33,7 @@ class CustomProfileScriptConsoleView extends View
       @span class: 'heading-status icon-primitive-square', outlet: 'icon_stop', click: ''
       @span class: 'heading-status icon-sync', outlet: 'icon_restart', click: ''
 
-      css = 'btn inline-block-tight'
-      @button class: "btn #{css}", click: 'close', 'Close'
+      @span class: "heading-close icon-remove-close pull-right", click: 'close'
 
   initialize: (@runOptions) ->
     @ansiFilter = new AnsiFilter

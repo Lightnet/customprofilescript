@@ -1,9 +1,13 @@
 ###
- Project Name: Custom Script Builds
- Link: https://github.com/Lightnet/customscriptbuilds
- License: MIT
- Information: To run typescript for server hosting for better style format flow.
- To create a simple work flow layout. For browser game or application for html.
+
+  Project Name: Custom Profile Script
+  Date:2014.11.13
+  Created by: Lightnet
+  Link:https://github.com/Lightnet/customprofilescript
+  license: MIT
+
+  Check for more information on readme.txt file.
+
 ###
 
 path = require 'path'

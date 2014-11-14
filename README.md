@@ -1,10 +1,16 @@
-# customprofilescript package
+[[[
 ###
+
+  Project Name: Custom Profile Script
   Date:2014.11.13
   Created by: Lightnet
   Link:https://github.com/Lightnet/customprofilescript
   license: MIT
+
+  Check for more information on readme.txt file.
+
 ###
+
 
 Project Name: Custom Profile Script
 Program Used: Atom
@@ -17,3 +23,4 @@ Trying to script idea to have ai bot. To create a 2D/3D model build test.
 
 Is to have an open end src code and the tools to work with atom packages to run
 something simple to do.
+]]]
