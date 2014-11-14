@@ -15,7 +15,7 @@ _ = require 'underscore'
 {View,BufferedProcess,$$} = require 'atom'
 
 module.exports =
-class CustomProfileScriptConsoleView extends View
+class CustomProfileScriptSettingsView extends View
   @bufferedProcess: null
 
   @content: ->
@@ -38,9 +38,9 @@ class CustomProfileScriptConsoleView extends View
 
   initialize: (@runOptions) ->
     @ansiFilter = new AnsiFilter
-    @title.text  'Custom Profile Script'
+    @title.text  'Custom Settings'
     @setStatus 'stop'
-    @output.empty()
+
       # Bind commands
     atom.workspaceView.command 'customprofilescript:run', => @run()
     #atom.workspaceView.command 'customprofilescript:run-by-line-number', => @lineRun()

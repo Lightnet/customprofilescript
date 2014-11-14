@@ -15,16 +15,31 @@
         {
           'label': 'Toggle'
           'command': 'customprofilescript:toggle'
-        }
+        },
         {
-          'label': 'Show'
-          'command': 'customprofilescript:open-console'
-        }
+          'label': 'Run'
+          'command': 'customprofilescript:run'
+        },
         {
-          'label': 'Hide'
-          'command': 'customprofilescript:close-console'
-        }
-
+          'label': 'kill-process'
+          'command': 'customprofilescript:kill-process'
+        },
+        {
+          'label': 'console append'
+          'command': 'customprofilescript:msg-console'
+        },
+        {
+          'label': 'Toolbar'
+          'command': 'customprofilescript:toggletoolbar'
+        },
+        {
+          'label': 'Settings'
+          'command': 'customprofilescript:settings'
+        },
+        {
+          'label': 'Console'
+          'command': 'customprofilescript:toggle-console'
+        },
       ]
     ]
   }

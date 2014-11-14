@@ -1,4 +1,7 @@
+# Main code to run scripts
+
 {View} = require 'atom'
+
 
 CustomProfileScriptConsoleView = require './customprofilescript-console-view'
 
@@ -19,10 +22,12 @@ class CustomprofilescriptView
 
     # Register command that toggles this view
     atom.commands.add 'atom-workspace', 'customprofilescript:toggle': => @toggle()
+    atom.commands.add 'atom-workspace', 'customprofilescript:togglemsg': => @togglemsg()
+    atom.commands.add 'atom-workspace', 'customprofilescript:settings': => @togglesettings()
 
     @customprofilescriptconsoleview = new CustomProfileScriptConsoleView()
-    #atom.workspaceView.appendToBottom(@customprofilescriptconsoleview)
-
+    atom.workspaceView.appendToBottom(@customprofilescriptconsoleview)
+    #console.log this
 
   # Returns an object that can be retrieved when package is activated
   serialize: ->
@@ -39,3 +44,13 @@ class CustomprofilescriptView
       @element.remove()
     else
       atom.workspaceView.append(@element)
+
+  togglemsg: ->
+    atom.emit 'achievement:unlock', msg: 'Homestar Runner'
+    console.log atom
+
+
+
+  togglesettings: ->
+    console.log atom
+    atom.workspaceView.trigger 'customprofilescript:open'
