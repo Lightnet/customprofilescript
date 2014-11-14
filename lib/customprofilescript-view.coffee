@@ -23,7 +23,7 @@ class CustomprofilescriptView
     # Register command that toggles this view
     atom.commands.add 'atom-workspace', 'customprofilescript:toggle': => @toggle()
     atom.commands.add 'atom-workspace', 'customprofilescript:togglemsg': => @togglemsg()
-    atom.commands.add 'atom-workspace', 'customprofilescript:settings': => @togglesettings()
+    #atom.commands.add 'atom-workspace', 'customprofilescript:settings': => @togglesettings()
 
     @customprofilescriptconsoleview = new CustomProfileScriptConsoleView()
     atom.workspaceView.appendToBottom(@customprofilescriptconsoleview)
@@ -52,5 +52,5 @@ class CustomprofilescriptView
 
 
   togglesettings: ->
-    console.log atom
+    #console.log atom
     atom.workspaceView.trigger 'customprofilescript:open'

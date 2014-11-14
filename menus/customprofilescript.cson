@@ -1,4 +1,69 @@
 # See https://atom.io/docs/latest/creating-a-package#menus for more details
+
+'context-menu':
+  'atom-text-editor': [
+    {
+      'label': 'Toggle customprofilescript'
+      'command': 'customprofilescript:toggle'
+    }
+  ]
+'menu': [
+  {
+    'label': 'customprofilescript'
+    'submenu': [
+      {
+        'label': 'Toggle'
+        'command': 'customprofilescript:toggle'
+      },
+      {
+        'label': 'Mode'
+        'submenu': [
+          {
+            'label': 'Run'
+            'command': 'customprofilescript:run'
+          },
+          {
+            'label': 'Stop'
+            'command': 'customprofilescript:kill-process'
+          },
+          {
+            'label': 'Restart'
+            'command': 'customprofilescript:kill-process'
+          }
+        ]
+      },
+      {
+        'label': 'View'
+        'submenu': [
+          {
+            'label': 'Toolbar'
+            'command': 'customprofilescript:toggletoolbar'
+          }
+        ]
+      },
+      {
+        'label': 'Debug Test'
+        'submenu': [
+          {
+            'label': 'console append'
+            'command': 'customprofilescript:msg-console'
+          }
+        ]
+      },
+      {
+        'label': 'Settings'
+        'command': 'customprofilescript:show-my-view'
+      },
+      {
+        'label': 'Console'
+        'command': 'customprofilescript:toggle-console'
+      },
+    ]
+  }
+]
+
+
+###
 'context-menu':
   'atom-text-editor': [
     {
@@ -44,3 +109,4 @@
     ]
   }
 ]
+###

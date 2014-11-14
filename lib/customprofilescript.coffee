@@ -1,54 +1,40 @@
+{View} = require 'atom'
+path = require 'path'
 
 #Main file starter to lanuch the application
-
-CustomProfileScriptSettingsView = null
-customprofilescriptSettingsView = null
-
-configUri = 'atom://customprofilescript'
-
-CustomprofilescriptView = require './customprofilescript-view'
-CustomProfileScriptConsoleView = require './customprofilescript-console-view'
+CustomprofilescriptView = require './customprofilescript-view' #main entry
 CustomProfileScriptToolbarView = require './customprofilescript-toolbar-view'
+CustomProfileScriptConsoleView = require './customprofilescript-console-view'
 
-createSettingView = (params)->
-  CustomProfileScriptSettingsView ?= require './customprofilescript-settings-view'
-  customprofilescriptSettingsView = new CustomProfileScriptSettingsView(params)
+CustomProfileScriptSettingsView = require './customprofilescript-settings-view'
 
-openPanel = (panelName) ->
-  atom.workspaceView.open(configUri)
-  customprofilescriptSettingsView.showPanel(panelName)
+MyView = null
+configUri = null
+configUri = 'customprofilescript://my-view'
 
-deserializer =
-  name: 'CustomProfileScriptSettingsView'
-  version: 2
-  deserialize: (state) ->
-    console.log "state"
-    console.log state
-    createSettingsView(state) if state.constructor is Object
-atom.deserializers.add(deserializer)
+createMyView = (params) ->
+  MyView ?= require './my-view'
+  myView = new MyView(params)
 
 module.exports =
   customprofilescriptView: null
   customprofilescriptConsoleView: null
   customprofilescriptToolbarView: null
+  customprofilescriptSettingsView: null
 
   activate: (state) ->
     @customprofilescriptView = new CustomprofilescriptView(state.customprofilescriptViewState)
     @customprofilescriptToolbarView = new CustomProfileScriptToolbarView()
     atom.workspaceView.appendToTop(@customprofilescriptToolbarView)
-    console.log atom.workspaceView
+    console.log "configUri"
+    console.log configUri
 
-    atom.workspace.registerOpener (uri) ->
-      createSettingsView({uri}) if uri is configUri
+    atom.workspace.addOpener (uri) ->
+      createMyView({uri}) if uri is configUri
 
-    atom.workspaceView.command 'settings-view:open', ->
-      openPanel('Settings')
-
-    
-
-    #console.log @customprofilescriptView
-    #@customprofilescriptConsoleView = new CustomProfileScriptConsoleView
-    #console.log @customprofilescriptConsoleView #view class
+    #binding command
+    atom.commands.add 'atom-workspace', 'customprofilescript:show-my-view', ->
+      atom.workspace.open configUri
 
   deactivate: ->
     @customprofilescriptView.destroy()
@@ -57,3 +43,11 @@ module.exports =
   serialize: ->
     customprofilescriptViewState: @customprofilescriptView.serialize()
     #customprofilescriptConsoleViewState: customprofilescriptConsoleView.serialize() #view class #not does not work
+
+  createSettingView: (params)->
+    console.log "creating view"
+    console.log params
+    @customprofilescriptSettingsView = new CustomProfileScriptSettingsView(params)
+  openPanel: (panelName) ->
+    console.log atom
+    atom.workspace.open configUri
