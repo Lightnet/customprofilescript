@@ -25,8 +25,8 @@ class MyView extends ScrollView
       @div class: 'config-menu', outlet: 'sidebar', =>
         @ul class: 'panels-menu nav nav-pills nav-stacked', outlet: 'panelMenu', =>
           @div class: 'panel-menu-separator', outlet: 'menuSeparator'
-          @div class: 'editor-container settings-filter', =>
-            @subview 'filterEditor', new TextEditorView(mini: true, placeholderText: 'Filter packages')
+          #@div class: 'editor-container settings-filter', =>
+            #@subview 'filterEditor', new TextEditorView(mini: true, placeholderText: 'Filter packages')
         @ul class: 'panels-packages nav nav-pills nav-stacked', outlet: 'panelPackages'
         @div class: 'button-area', =>
           @button class: 'btn btn-default icon icon-link-external', outlet: 'openDotAtom', 'Open ~/.atom'

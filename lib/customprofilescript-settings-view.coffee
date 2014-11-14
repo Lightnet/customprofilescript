@@ -10,38 +10,86 @@
 
 ###
 
-#CodeContext = require './code-context'
-#grammarMap = require './grammars'
-
-AnsiFilter = require 'ansi-to-html'
-_ = require 'underscore'
-
+path = require 'path'
+_ = require 'underscore-plus'
 {$, $$, ScrollView, TextEditorView} = require 'atom'
-{View} = require 'atom'
+#async = require 'async'
+#CSON = require 'season'
 
 module.exports =
-class CustomProfileScriptSettingsView extends View
-  @bufferedProcess: null
+class CustomProfileScriptSettingsView extends ScrollView
+  #@bufferedProcess: null
 
   @content: ->
-    @div class: 'panel-heading padded heading header-view', => #header
-      @span class: 'heading-status icon-terminal', outlet: 'icon_terimal', click: 'toggleconsole'
-      @span class: 'heading-title', outlet: 'title'
-      @span class: 'heading-status', outlet: 'status'
+    @div class: 'settings-view pane-item', tabindex: -1, =>
+      @div class: 'config-menu', outlet: 'sidebar', =>
+        @ul class: 'panels-menu nav nav-pills nav-stacked', outlet: 'panelMenu', =>
+          @div class: 'panel-menu-separator', outlet: 'menuSeparator'
+          @div class: 'editor-container settings-filter', =>
+            #@span class: 'heading-status icon-sync', outlet: 'icon_restart', click: ''
+            #@subview 'filterEditor', new TextEditorView(mini: true, placeholderText: 'Filter packages')
+        @ul class: 'panels-packages nav nav-pills nav-stacked', outlet: 'panelPackages'
+        #@span class: 'heading-status icon-sync', outlet: 'icon_restart', click: ''
+        @div class: 'button-area', =>
+          @button class: 'btn btn-default icon icon-link-external', outlet: 'openDotAtom', 'Open ~/.atom'
 
-  initialize: (@runOptions) ->
-    #atom.workspaceView.prependToTop this
-    #@toggleScriptOptions 'hide'
-    #console.log this
+      #@div class: 'panels padded', outlet: 'panels'
+      @div class: 'panels padded', outlet: 'scriptOptionsView', => #non header
+        @div class: 'panel-body padded', =>
+          @div class: 'block', =>
+            @span class: 'heading-status icon-alert', outlet: 'icon_restart', click: ''
+            @label 'Setting Name:'
+            @input
+              type: 'text'
+              class: 'editor mini native-key-bindings'
+              outlet: 'inputSettingName'
+            css = 'btn inline-block-tight'
+            @button class: "btn #{css}", click: '', 'Close'
 
 
-  close: ->
-    #atom.workspaceView.trigger 'customprofilescript:close-console'
 
-  setStatus: (status) ->
-    @status.removeClass 'icon-alert icon-check icon-hourglass icon-stop'
-    switch status
-      when 'start' then @status.addClass 'icon-hourglass'
-      when 'stop' then @status.addClass 'icon-check'
-      when 'kill' then @status.addClass 'icon-stop'
-      when 'err' then @status.addClass 'icon-alert'
+  initialize: ({@uri, activePanelName}={}) ->
+    super
+    console.log 'initialize'
+    #
+
+  handlePackageEvents: ->
+
+  initializePanels: ->
+
+  afterAttach: (onDom) ->
+
+  serialize: ->
+
+  getPackages: ->
+
+  addCorePanel: (name, iconName, panel) ->
+
+  addPackagePanel: (pack) ->
+
+  addPanel: (name, panelMenuItem, panelCreateCallback) ->
+
+  getOrCreatePanel: (name) ->
+
+  makePanelMenuActive: (name) ->
+
+  focus: ->
+    super
+
+  showPanel: (name) ->
+
+  filterPackages: ->
+
+  removePanel: (name) ->
+
+  getTitle: ->
+    "CustomProfileScript Config"
+
+  getIconName: ->
+    "tools"
+
+  getUri: ->
+    @uri
+
+  isEqual: (other) ->
+    other instanceof MyView

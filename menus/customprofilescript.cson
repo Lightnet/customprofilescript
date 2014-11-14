@@ -28,6 +28,10 @@
         'command': 'customprofilescript:toggle'
       },
       {
+        'label': 'Avatar'
+        'command': 'customprofilescript:toggleavatar'
+      },
+      {
         'label': 'Mode'
         'submenu': [
           {

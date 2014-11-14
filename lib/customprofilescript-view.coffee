@@ -14,10 +14,12 @@
 {View} = require 'atom'
 
 CustomProfileScriptConsoleView = require './customprofilescript-console-view'
+CustomProfileScriptAvatarView = require './customprofilescript-avatar-view'
 
 module.exports =
 class CustomprofilescriptView
-
+  customprofilescriptConsoleView: null #Console
+  customprofilescriptAvatarView: null #Avatar
 
   constructor: (serializeState) ->
     # Create root element
@@ -35,8 +37,11 @@ class CustomprofilescriptView
     atom.commands.add 'atom-workspace', 'customprofilescript:togglemsg': => @togglemsg()
     #atom.commands.add 'atom-workspace', 'customprofilescript:settings': => @togglesettings()
 
-    @customprofilescriptconsoleview = new CustomProfileScriptConsoleView()
-    atom.workspaceView.appendToBottom(@customprofilescriptconsoleview)
+    @customprofilescriptConsoleView = new CustomProfileScriptConsoleView()
+    atom.workspaceView.appendToBottom(@customprofilescriptConsoleView)
+
+    @customprofilescriptAvatarView = new CustomProfileScriptAvatarView()
+    atom.workspaceView.appendToBottom(@customprofilescriptAvatarView)
     #console.log this
 
   # Returns an object that can be retrieved when package is activated
@@ -58,8 +63,6 @@ class CustomprofilescriptView
   togglemsg: ->
     atom.emit 'achievement:unlock', msg: 'Homestar Runner'
     console.log atom
-
-
 
   togglesettings: ->
     #console.log atom
