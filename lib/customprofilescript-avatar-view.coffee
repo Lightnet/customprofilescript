@@ -41,26 +41,33 @@ class CustomProfileScriptAvatarView extends View
   @content: ->
     #@element = document.createElement('div')
     #@element.classList.add('customprofilescript',  'overlay', 'from-top')
-    @div class: 'customprofilescript overlay from-top', =>
+    @div class: 'customprofilescript overlay', =>
     #@div class: 'panel-heading padded heading header-view', outlet: 'AvatarHeader', => #header
-      @div id:'mymodal', class: 'overlay from-top panel', outlet: 'AvatarView', => #non header
-      #@div class: 'panel-heading padded heading header-view', => #header
-        @div class: 'block', =>
-          @span class: 'heading-status icon-terminal', outlet: 'icon_terimal', click: 'render'
-          @span class: 'heading-title', outlet: 'title'
-          @span class: 'heading-status icon-playback-play', outlet: 'icon_playbackplay', click: 'start'
-          @span class: 'heading-status icon-playback-pause', outlet: 'icon_stop', click: 'pause'
-          @span class: 'heading-status icon-primitive-square', outlet: 'icon_stop', click: 'stop'
-          @span class: 'heading-status icon-sync', outlet: 'icon_restart', click: 'restart'
-        @div class: 'block', =>
-          @div outlet:'renderscene'
-          #@script src:'atom://customprofilescript/js/three.min.js', type:'text/javascript'
-          #@script src:'atom://customprofilescript/js/render.js', type:'text/javascript'
-          #@span class: 'heading-status', outlet: 'status'
-          #@span class: 'heading-status icon-playback-play', outlet: 'icon_playbackplay', click: ''
-          #@span class: 'heading-status icon-primitive-square', outlet: 'icon_stop', click: ''
-          #@span class: 'heading-status icon-sync', outlet: 'icon_restart', click: ''
-          #@span class: "heading-close icon-remove-close pull-right", click: 'close'
+      #@div id:'mymodal', class: 'overlay from-top panel', => #non header
+      # style:'position: fixed;left: 250px;top: 0px;'
+      @div style:'position: fixed;left: 0px;top: 0px;', outlet: 'AvatarHeader', =>
+        @div class: 'panel-heading padded heading header-view', outlet: 'AvatarView', => #header
+          @div class: 'block', =>
+            @span class: 'heading-status icon-terminal', outlet: 'icon_terimal', click: 'render'
+            @span class: 'heading-title', outlet: 'title'
+            @span class: 'heading-status icon-playback-play', outlet: 'icon_playbackplay', click: 'start'
+            @span class: 'heading-status icon-playback-pause', outlet: 'icon_stop', click: 'pause'
+            @span class: 'heading-status icon-primitive-square', outlet: 'icon_stop', click: 'stop'
+            @span class: 'heading-status icon-sync', outlet: 'icon_restart', click: 'restart'
+
+            @span class: 'heading-status icon-triangle-down', outlet: '', click: 'movepanel_down'
+            @span class: 'heading-status icon-triangle-left', outlet: '', click: 'movepanel_left'
+            @span class: 'heading-status icon-triangle-right', outlet: '', click: 'movepanel_right'
+            @span class: 'heading-status icon-triangle-up', outlet: '', click: 'movepanel_up'
+          @div class: 'block', =>
+            @div outlet:'renderscene'
+            #@script src:'atom://customprofilescript/js/three.min.js', type:'text/javascript'
+            #@script src:'atom://customprofilescript/js/render.js', type:'text/javascript'
+            #@span class: 'heading-status', outlet: 'status'
+            #@span class: 'heading-status icon-playback-play', outlet: 'icon_playbackplay', click: ''
+            #@span class: 'heading-status icon-primitive-square', outlet: 'icon_stop', click: ''
+            #@span class: 'heading-status icon-sync', outlet: 'icon_restart', click: ''
+            #@span class: "heading-close icon-remove-close pull-right", click: 'close'
   #constructor: (serializeState) ->
     #super
     #atom.commands.add 'atom-workspace', 'customprofilescript:timetick': -> @timetick()
@@ -69,12 +76,14 @@ class CustomProfileScriptAvatarView extends View
     #$('#myModal').draggable();
     #@AvatarView
     #console.log $('#yModal').hide()
-    console.log "@content"
-    console.log @element
+    #console.log "@content"
+    #console.log @element
     #console.log $$
-    console.log @AvatarView
-
-
+    #console.log @AvatarView.position()
+    #console.log @AvatarView
+    #console.log @AvatarHeader
+    #console.log @CPSO
+    #console.log  @AvatarHeader.style
     @ansiFilter = new AnsiFilter
     @title.text  ' Avatar '
 
@@ -101,6 +110,15 @@ class CustomProfileScriptAvatarView extends View
     #window.requestAnimationFrame( @render())
     #@render()
     #console.log setTimeout
+
+  movepanel_down:->
+    console.log @AvatarHeader.css('left',20)
+  movepanel_left:->
+    console.log @AvatarHeader.css('left')
+  movepanel_right:->
+    console.log @AvatarHeader
+  movepanel_up:->
+    console.log @AvatarHeader
 
   timetick:->
     console.log 'tick'
@@ -140,7 +158,6 @@ class CustomProfileScriptAvatarView extends View
       #console.log "render init?"
     #console.log "end start"
 
-
   pause:->
     #console.log "pause"
     @bPause = true
@@ -167,7 +184,6 @@ class CustomProfileScriptAvatarView extends View
     @cube.rotation.x += 0.1;
     @cube.rotation.y += 0.1;
     @renderer.render(@scene, @camera);
-
 
   toggleconsole:->
     atom.workspaceView.trigger 'customprofilescript:toggle-console'
