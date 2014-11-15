@@ -111,14 +111,57 @@ class CustomProfileScriptAvatarView extends View
     #@render()
     #console.log setTimeout
 
+    #@monitorCursor()
+
+  monitorCursor: ->
+    atom.workspaceView.eachEditorView (ev) =>
+      ev.on 'mouse:moved', =>
+        console.log "move?"
+
+
+    atom.workspaceView.eachEditorView (ev) =>
+      ev.on 'cursor:moved', =>
+        editor = atom.workspace.getActiveTextEditor()
+        console.log editor
+        markers = editor.getMarkers()
+        console.log markers
+        #cursor = editor.getCursor()
+        #cursorPos = cursor.getBufferPosition()
+        #console.log cursorPos
+        #for marker in markers
+          #if marker.getAttributes().isDartMarker
+            #range = marker.getBufferRange()
+
+
+
+
   movepanel_down:->
-    console.log @AvatarHeader.css('left',20)
+    x1 =  @AvatarHeader.css('top').replace('px','')
+    x1 = parseInt(x1)
+    x1 = x1 + 5
+    @AvatarHeader.css('top', x1 + 'px')
+    console.log x1
+
   movepanel_left:->
-    console.log @AvatarHeader.css('left')
+    x1 =  @AvatarHeader.css('left').replace('px','')
+    x1 = parseInt(x1)
+    x1 = x1 - 5
+    @AvatarHeader.css('left',x1+ 'px')
+    console.log x1
+
   movepanel_right:->
-    console.log @AvatarHeader
+    x1 =  @AvatarHeader.css('left').replace('px','')
+    x1 = parseInt(x1)
+    x1 = x1 + 5
+    @AvatarHeader.css('left',x1+ 'px')
+    console.log x1
+
   movepanel_up:->
-    console.log @AvatarHeader
+    x1 =  @AvatarHeader.css('top').replace('px','')
+    x1 = parseInt(x1)
+    x1 = x1 - 5
+    @AvatarHeader.css('top', x1 + 'px')
+    console.log x1
 
   timetick:->
     console.log 'tick'
