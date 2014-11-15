@@ -52,7 +52,7 @@ class CustomProfileScriptConsoleView extends View
 
   toggleScriptOptions: (command) ->
     #console.log command
-    console.log "toggle toolbar"
+    #console.log "toggle toolbar"
     #@CustomScriptBuildsConfigView.hide()
     switch command
       when 'show' then this.show()

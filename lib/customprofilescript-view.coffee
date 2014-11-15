@@ -41,7 +41,10 @@ class CustomprofilescriptView
     atom.workspaceView.appendToBottom(@customprofilescriptConsoleView)
 
     @customprofilescriptAvatarView = new CustomProfileScriptAvatarView()
-    atom.workspaceView.appendToBottom(@customprofilescriptAvatarView)
+    atom.workspaceView.append(@customprofilescriptAvatarView)
+    #atom.workspaceView.appendToTop(@customprofilescriptAvatarView)
+    #atom.workspaceView.appendToBottom(@customprofilescriptAvatarView)
+    #atom.workspaceView.append(@customprofilescriptAvatarView)
     #console.log this
 
   # Returns an object that can be retrieved when package is activated
