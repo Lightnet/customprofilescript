@@ -44,7 +44,9 @@ class CustomProfileScriptAvatarView extends View
   pos_x = 0
   pos_y = 0
   self= @
-  AvatarHeader = null
+  bUpdate:false
+  bOut:true
+
 
   @content: ->
     #@element = document.createElement('div')
@@ -99,34 +101,93 @@ class CustomProfileScriptAvatarView extends View
     self = @
     console.log testrun(false)
 
+    self.setmodalx( atom.config.get('customprofilescript.avatarviewposx'))
+    self.setmodaly( atom.config.get('customprofilescript.avatarviewposy'))
+
+
   testrun = (isprefixed) =>
     return 'test'
+  #==============================================
+  #div mouse events
+  eventmouseenter:(e)->
+    #console.log "eventmouseenter"
+  eventmouseout:(e)->
+    #console.log "eventmouseout"
+    self.bOut = true
+  eventmouseover:(e)->
+    #console.log "eventmouseover"
+    self.bOut = false
+  eventmouseup:(e)->
+    #console.log "eventmouseup"
+    self.bUpdate = false
+    #save settings
+    atom.config.set('customprofilescript.avatarviewposx', self.getmouse_x())
+    atom.config.set('customprofilescript.avatarviewposy', self.getmouse_y())
 
-  eventmouseenter:->
-    console.log "eventmouseenter"
-  eventmouseout:->
-    console.log "eventmouseout"
-  eventmouseover:->
-    console.log "eventmouseover"
-  eventmouseup:->
-    console.log "eventmouseup"
-  eventmousedown:->
-    console.log "eventmousedown"
-    console.log getmouse_x(false)
+  eventmousedown:(e)->
+    #console.log "eventmousedown"
+    #console.log getmouse_x(false)
+    self.bUpdate = true
+    self.offset_x = e.offsetX
+    self.offset_y = e.offsetY
+
   eventmousemove:(e)->
     #console.log "eventmousemove"
     #console.log e
     #console.log (e.clientX+":"+e.clientY)
     pos_x = e.clientX
     pos_y = e.clientY
-    self.update_modal()
-    console.log self
 
+    if self.bUpdate == true #update modal
+      #console.log 'updating...'
+      self.update_modal()
+      #console.log self.update_modal()
+
+  #==============================================
+  # update modal
   update_modal:->
-    console.log 'update?'
-    AvatarHeader.css('left',(pos_x - 10) + 'px')
-    AvatarHeader.css('top', (pos_y - 10) + 'px')
+    #console.log 'update?'
+                                #mouse    #offset of the modal position
+    self.AvatarHeader.css('left',(pos_x - self.offset_x) + 'px')
+    self.AvatarHeader.css('top', (pos_y - self.offset_y) + 'px')
 
+  getmouse_x: (isprefixed) =>
+    #console.log self.AvatarHeader
+    x1 =  self.AvatarHeader.css('left').replace('px','')
+    #x1 ='0'
+    x1 = parseInt(x1)
+    return x1
+
+  getmouse_y: (isprefixed) ->
+    y1 =  self.AvatarHeader.css('top').replace('px','')
+    y1 = parseInt(y1)
+    return y1
+
+  setmodalx:(_x)->
+    self.AvatarHeader.css('left', _x + 'px')
+
+  setmodaly:(_y)->
+    self.AvatarHeader.css('top', _y + 'px')
+
+  movepanel_left:->
+    x1 = self.getmouse_x(false) - 5
+    self.setmodalx(x1)
+    #console.log x1
+
+  movepanel_right:->
+    x1 =  self.getmouse_x(false) + 5
+    self.setmodalx(x1)
+    #console.log x1
+
+  movepanel_up:->
+    x1 = self.getmouse_y(false) - 5
+    self.setmodaly(x1)
+    #console.log x1
+
+  movepanel_down:->
+    y1 = self.getmouse_y(false) + 5
+    self.setmodaly(y1)
+    #console.log y1
 
   addbindCommands:->
     atom.workspaceView.command 'customprofilescript:toggleavatar', => @toggleScriptOptions()
@@ -188,46 +249,6 @@ class CustomProfileScriptAvatarView extends View
         #for marker in markers
           #if marker.getAttributes().isDartMarker
             #range = marker.getBufferRange()
-  movepanel_down:->
-    ###
-    x1 =  @AvatarHeader.css('top').replace('px','')
-    x1 = parseInt(x1)
-    x1 = x1 + 5
-    @AvatarHeader.css('top', x1 + 'px')
-    console.log x1
-    ###
-  getmouse_x = (isprefixed) =>
-    console.log AvatarHeader
-    x1 =  AvatarHeader.css('left').replace('px','')
-    #x1 ='0'
-    x1 = parseInt(x1)
-    return x1
-
-  getmouse_y = ->
-    y1 =  AvatarHeader.css('top').replace('px','')
-    y1 = parseInt(y1)
-    return y1
-
-  movepanel_left:->
-    x1 =  @AvatarHeader.css('left').replace('px','')
-    x1 = parseInt(x1)
-    x1 = x1 - 5
-    @AvatarHeader.css('left',x1+ 'px')
-    console.log x1
-
-  movepanel_right:->
-    x1 =  @AvatarHeader.css('left').replace('px','')
-    x1 = parseInt(x1)
-    x1 = x1 + 5
-    @AvatarHeader.css('left',x1+ 'px')
-    console.log x1
-
-  movepanel_up:->
-    x1 =  @AvatarHeader.css('top').replace('px','')
-    x1 = parseInt(x1)
-    x1 = x1 - 5
-    @AvatarHeader.css('top', x1 + 'px')
-    console.log x1
 
   timetick:->
     console.log 'tick'

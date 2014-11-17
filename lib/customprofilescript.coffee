@@ -28,6 +28,11 @@ createMyView = (params) ->
   customprofilescriptSettingsView = new CustomProfileScriptSettingsView(params)
 
 module.exports =
+  configDefaults:
+    avatarviewposx: 10
+    avatarviewposy: 10
+
+
   customprofilescriptView: null
   customprofilescriptConsoleView: null
   customprofilescriptToolbarView: null
@@ -46,6 +51,11 @@ module.exports =
     #binding command
     atom.commands.add 'atom-workspace', 'customprofilescript:show-my-view', ->
       atom.workspace.open configUri
+
+    #atom.config.set('customprofilescript.avatarviewposx', '12')
+    #atom.config.set('customprofilescript.someSetting', '12')
+    #console.log atom.config.get('customprofilescript.someSetting') # -> 12
+    #console.log atom.config.get('customprofilescript.avatarviewposx') # -> 12
 
   deactivate: ->
     @customprofilescriptView.destroy()
