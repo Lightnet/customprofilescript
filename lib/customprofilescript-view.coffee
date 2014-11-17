@@ -46,13 +46,33 @@ class CustomprofilescriptView
     #atom.workspaceView.appendToBottom(@customprofilescriptAvatarView)
     #atom.workspaceView.append(@customprofilescriptAvatarView)
     #console.log this
-
+    #@monitorCursor()
   # Returns an object that can be retrieved when package is activated
   serialize: ->
 
   # Tear down any state and detach
   destroy: ->
     @element.remove()
+
+  monitorCursor: ->
+    console.log "monitorCursor"
+    atom.workspaceView.eachEditorView (ev) =>
+      ev.on 'mouse:moved', =>
+        console.log "move?"
+
+
+    atom.workspaceView.eachEditorView (ev) =>
+      ev.on 'cursor:moved', =>
+        editor = atom.workspace.getActiveTextEditor()
+        console.log editor
+        markers = editor.getMarkers()
+        console.log markers
+        #cursor = editor.getCursor()
+        #cursorPos = cursor.getBufferPosition()
+        #console.log cursorPos
+        #for marker in markers
+          #if marker.getAttributes().isDartMarker
+            #range = marker.getBufferRange()
 
   # Toggle the visibility of this view
   toggle: ->

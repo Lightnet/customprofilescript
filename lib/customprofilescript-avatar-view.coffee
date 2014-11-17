@@ -20,7 +20,7 @@
 AnsiFilter = require 'ansi-to-html'
 _ = require 'underscore'
 
-{View,BufferedProcess,$$} = require 'atom'
+{View, BufferedProcess, $$, $ } = require 'atom'
 
 THREE = require './three.min'
 
@@ -37,6 +37,14 @@ class CustomProfileScriptAvatarView extends View
   bPause: false
   ms: 500
   IsRenderCreated: false
+  _activeButton: -1
+  activeButton: 0
+  offset_x:0
+  offset_y:0
+  pos_x = 0
+  pos_y = 0
+  self= @
+  AvatarHeader = null
 
   @content: ->
     #@element = document.createElement('div')
@@ -48,7 +56,7 @@ class CustomProfileScriptAvatarView extends View
       @div style:'position: fixed;left: 0px;top: 0px;', outlet: 'AvatarHeader', =>
         @div class: 'panel-heading padded heading header-view', outlet: 'AvatarView', => #header
           @div class: 'block', =>
-            @span class: 'heading-status icon-terminal', outlet: 'icon_terimal', click: 'render'
+            @span class: 'heading-status icon-terminal', outlet: 'icon_terimal', click: 'toggleconsole'
             @span class: 'heading-title', outlet: 'title'
             @span class: 'heading-status icon-playback-play', outlet: 'icon_playbackplay', click: 'start'
             @span class: 'heading-status icon-playback-pause', outlet: 'icon_stop', click: 'pause'
@@ -61,40 +69,66 @@ class CustomProfileScriptAvatarView extends View
             @span class: 'heading-status icon-triangle-up', outlet: '', click: 'movepanel_up'
           @div class: 'block', =>
             @div outlet:'renderscene'
-            #@script src:'atom://customprofilescript/js/three.min.js', type:'text/javascript'
-            #@script src:'atom://customprofilescript/js/render.js', type:'text/javascript'
-            #@span class: 'heading-status', outlet: 'status'
-            #@span class: 'heading-status icon-playback-play', outlet: 'icon_playbackplay', click: ''
-            #@span class: 'heading-status icon-primitive-square', outlet: 'icon_stop', click: ''
-            #@span class: 'heading-status icon-sync', outlet: 'icon_restart', click: ''
-            #@span class: "heading-close icon-remove-close pull-right", click: 'close'
   #constructor: (serializeState) ->
     #super
     #atom.commands.add 'atom-workspace', 'customprofilescript:timetick': -> @timetick()
 
   initialize: (@runOptions) ->
-    #$('#myModal').draggable();
-    #@AvatarView
-    #console.log $('#yModal').hide()
-    #console.log "@content"
-    #console.log @element
-    #console.log $$
-    #console.log @AvatarView.position()
-    #console.log @AvatarView
-    #console.log @AvatarHeader
-    #console.log @CPSO
-    #console.log  @AvatarHeader.style
-    @ansiFilter = new AnsiFilter
+    AvatarHeader = @AvatarHeader
     @title.text  ' Avatar '
-
+    # Init Threejs
     @initThreejs()
-
-    #@setStatus 'stop'
-    #console.log "initialize avatar?"
-    #atom.workspaceView.appendToTop(this)
-    #atom.workspaceView.appendToRight(this)
-    #atom.workspaceView.append(this)
     # Bind commands
+    @addbindCommands()
+    #hide view
+    this.hide()
+    @addlisten()
+    console.log $
+    console.log @element
+
+    console.log @AvatarView
+
+    #@AvatarView.mouseenter(this,@eventmouseenter)
+    @AvatarView.mouseout(this,@eventmouseout)
+    @AvatarView.mouseover(this,@eventmouseover)
+
+    @AvatarView.mouseup(this,@eventmouseup)
+    @AvatarView.mousedown(this,@eventmousedown)
+    @AvatarView.mousemove(this,@eventmousemove)
+    #console.log @element
+    self = @
+    console.log testrun(false)
+
+  testrun = (isprefixed) =>
+    return 'test'
+
+  eventmouseenter:->
+    console.log "eventmouseenter"
+  eventmouseout:->
+    console.log "eventmouseout"
+  eventmouseover:->
+    console.log "eventmouseover"
+  eventmouseup:->
+    console.log "eventmouseup"
+  eventmousedown:->
+    console.log "eventmousedown"
+    console.log getmouse_x(false)
+  eventmousemove:(e)->
+    #console.log "eventmousemove"
+    #console.log e
+    #console.log (e.clientX+":"+e.clientY)
+    pos_x = e.clientX
+    pos_y = e.clientY
+    self.update_modal()
+    console.log self
+
+  update_modal:->
+    console.log 'update?'
+    AvatarHeader.css('left',(pos_x - 10) + 'px')
+    AvatarHeader.css('top', (pos_y - 10) + 'px')
+
+
+  addbindCommands:->
     atom.workspaceView.command 'customprofilescript:toggleavatar', => @toggleScriptOptions()
     atom.workspaceView.command 'customprofilescript:hideavatar', => @toggleScriptOptions 'hide'
     atom.workspaceView.command 'customprofilescript:showavatar', => @toggleScriptOptions 'show'
@@ -105,14 +139,37 @@ class CustomProfileScriptAvatarView extends View
     atom.commands.add 'atom-workspace', 'customprofilescript:pauserender': => @pause()
     atom.commands.add 'atom-workspace', 'customprofilescript:stoprender': => @stop()
     atom.commands.add 'atom-workspace', 'customprofilescript:restartrender': => @restart()
+    #console.log "initialize avatar?"
+    #atom.workspaceView.appendToTop(this)
+    #atom.workspaceView.appendToRight(this)
+    #atom.workspaceView.append(this)
 
-    #console.log
-    #window.requestAnimationFrame( @render())
-    #@render()
-    #console.log setTimeout
+  addlisten:->
+    #link ref : http://www.w3schools.com/jsref/dom_obj_event.asp
+    #window.addEventListener("mousemove", @updateMouseState, false)
+    #window.addEventListener("mousedown", @updateMouseState, false)
+    #window.addEventListener("mouseup", @updateMouseState, false)
 
-    #@monitorCursor()
+    #window.addEventListener("dragover",drawCallback = ->
+      #@updateMouseState({which: 1})
+    #, false)
+    #window.addEventListener("dragleave",drawCallback = ->
+      #@updateMouseState({which: 0})
+    #,false)
 
+  removelisten:->
+
+  updateMouseState:(e)->
+    #console.log 'move?'
+    #console.log e
+    @_activeButton = -1
+    @activeButton = 0
+
+    # update active button.
+    #console.log e.button
+    #console.log e.type
+    #console.log e.which
+    #activeButton = typeof e.buttons == "number" ? e.buttons : e.which
   monitorCursor: ->
     atom.workspaceView.eachEditorView (ev) =>
       ev.on 'mouse:moved', =>
@@ -131,16 +188,25 @@ class CustomProfileScriptAvatarView extends View
         #for marker in markers
           #if marker.getAttributes().isDartMarker
             #range = marker.getBufferRange()
-
-
-
-
   movepanel_down:->
+    ###
     x1 =  @AvatarHeader.css('top').replace('px','')
     x1 = parseInt(x1)
     x1 = x1 + 5
     @AvatarHeader.css('top', x1 + 'px')
     console.log x1
+    ###
+  getmouse_x = (isprefixed) =>
+    console.log AvatarHeader
+    x1 =  AvatarHeader.css('left').replace('px','')
+    #x1 ='0'
+    x1 = parseInt(x1)
+    return x1
+
+  getmouse_y = ->
+    y1 =  AvatarHeader.css('top').replace('px','')
+    y1 = parseInt(y1)
+    return y1
 
   movepanel_left:->
     x1 =  @AvatarHeader.css('left').replace('px','')
