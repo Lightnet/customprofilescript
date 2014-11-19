@@ -85,10 +85,10 @@ class CustomProfileScriptAvatarView extends View
     #hide view
     this.hide()
     @addlisten()
-    console.log $
-    console.log @element
+    #console.log $
+    #console.log @element
 
-    console.log @AvatarView
+    #console.log @AvatarView
 
     #@AvatarView.mouseenter(this,@eventmouseenter)
     @AvatarView.mouseout(this,@eventmouseout)
@@ -99,7 +99,7 @@ class CustomProfileScriptAvatarView extends View
     @AvatarView.mousemove(this,@eventmousemove)
     #console.log @element
     self = @
-    console.log testrun(false)
+    #console.log testrun(false)
 
     self.setmodalx( atom.config.get('customprofilescript.avatarviewposx'))
     self.setmodaly( atom.config.get('customprofilescript.avatarviewposy'))
@@ -235,7 +235,6 @@ class CustomProfileScriptAvatarView extends View
     atom.workspaceView.eachEditorView (ev) =>
       ev.on 'mouse:moved', =>
         console.log "move?"
-
 
     atom.workspaceView.eachEditorView (ev) =>
       ev.on 'cursor:moved', =>
