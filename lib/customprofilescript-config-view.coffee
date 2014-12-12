@@ -17,7 +17,7 @@ _ = require 'underscore-plus'
 #CSON = require 'season'
 
 module.exports =
-class CustomProfileScriptSettingsView extends ScrollView
+class CustomProfileScriptConfigView extends ScrollView
   #@bufferedProcess: null
 
   @content: ->
@@ -31,62 +31,64 @@ class CustomProfileScriptSettingsView extends ScrollView
         @ul class: 'panels-packages nav nav-pills nav-stacked', outlet: 'panelPackages'
         #@span class: 'heading-status icon-sync', outlet: 'icon_restart', click: ''
         @div class: 'button-area', =>
-          @button class: 'btn btn-default icon icon-link-external', outlet: 'openDotAtom', 'Open ~/.atom'
+          #@button class: 'btn btn-default icon icon-link-external', outlet: 'openDotAtom', 'Open ~/.atom'
 
       #@div class: 'panels padded', outlet: 'panels'
       @div class: 'panels padded', outlet: 'scriptOptionsView', => #non header
-        @div class: 'panel-body padded', =>
-          @div class: 'block', =>
-            @span class: 'heading-status icon-alert', outlet: 'icon_restart', click: ''
-            @label 'Setting Name:'
-            @input
-              type: 'text'
-              class: 'editor mini native-key-bindings'
-              outlet: 'inputSettingName'
-            css = 'btn inline-block-tight'
-            @button class: "btn #{css}", click: '', 'Close'
+        #@div class: 'panel-body padded', =>
+        @span class: 'heading-status icon-alert', outlet: 'icon_restart', click: ''
+        @label 'Setting Name:'
+        @input
+          type: 'text'
+          class: 'editor mini native-key-bindings'
+          outlet: 'inputSettingName'
+        @div class: 'block', =>
+          css = 'btn inline-block-tight'
+          @button class: "btn #{css}", click: '', 'Save'
 
 
 
   initialize: ({@uri, activePanelName}={}) ->
     super
-    console.log 'initialize'
+    #console.log 'initialize'
+    #console.log "@uri"
+    #console.log @uri
     #
 
-  handlePackageEvents: ->
+  #handlePackageEvents: ->
 
-  initializePanels: ->
+  #initializePanels: ->
 
-  afterAttach: (onDom) ->
+  #afterAttach: (onDom) ->
 
-  serialize: ->
+  #serialize: ->
 
-  getPackages: ->
+  #getPackages: ->
 
-  addCorePanel: (name, iconName, panel) ->
+  #addCorePanel: (name, iconName, panel) ->
 
-  addPackagePanel: (pack) ->
+  #addPackagePanel: (pack) ->
 
-  addPanel: (name, panelMenuItem, panelCreateCallback) ->
+  #addPanel: (name, panelMenuItem, panelCreateCallback) ->
 
-  getOrCreatePanel: (name) ->
+  #getOrCreatePanel: (name) ->
 
-  makePanelMenuActive: (name) ->
+  #makePanelMenuActive: (name) ->
 
-  focus: ->
-    super
+  #focus: ->
+    #super
 
-  showPanel: (name) ->
+  #showPanel: (name) ->
 
-  filterPackages: ->
+  #filterPackages: ->
 
-  removePanel: (name) ->
+  #removePanel: (name) ->
 
   getTitle: ->
     "CustomProfileScript Config"
 
-  getIconName: ->
-    "tools"
+  #getIconName: ->
+    #"tools"
 
   getUri: ->
     @uri

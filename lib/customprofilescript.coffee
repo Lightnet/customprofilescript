@@ -13,9 +13,9 @@
 {View} = require 'atom'
 path = require 'path'
 
-configUri = 'customprofilescript://my-view'
-customprofilescriptSettingsView = null
-CustomProfileScriptSettingsView = null
+configUri = 'customprofilescript://my-config-view'
+CustomProfileScriptConfigView = null
+customprofilescriptConfigView = null
 
 #Main file starter to lanuch the application
 CustomprofilescriptView = require './customprofilescript-view' #main entry
@@ -24,8 +24,8 @@ CustomProfileScriptConsoleView = require './customprofilescript-console-view'
 #CustomProfileScriptSettingsView = require './customprofilescript-settings-view'
 
 createMyView = (params) ->
-  CustomProfileScriptSettingsView ?= require './customprofilescript-settings-view'
-  customprofilescriptSettingsView = new CustomProfileScriptSettingsView(params)
+  CustomProfileScriptConfigView ?= require './customprofilescript-config-view'
+  customprofilescriptConfigView = new CustomProfileScriptConfigView(params)
 
 module.exports =
   configDefaults:
@@ -49,7 +49,7 @@ module.exports =
       createMyView({uri}) if uri is configUri
 
     #binding command
-    atom.commands.add 'atom-workspace', 'customprofilescript:show-my-view', ->
+    atom.commands.add 'atom-workspace', 'customprofilescript:show-my-config-view', ->
       atom.workspace.open configUri
 
     #atom.config.set('customprofilescript.avatarviewposx', '12')

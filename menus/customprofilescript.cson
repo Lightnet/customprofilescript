@@ -67,8 +67,8 @@
         ]
       },
       {
-        'label': 'Settings'
-        'command': 'customprofilescript:show-my-view'
+        'label': 'Config'
+        'command': 'customprofilescript:show-my-config-view'
       },
       {
         'label': 'Console'
